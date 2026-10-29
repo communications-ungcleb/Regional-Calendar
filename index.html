@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Middle East Engagement Calendar — UN Global Compact</title>
+<meta name="description" content="Global, regional and local UN Global Compact programmes, events and engagement opportunities across Jordan, Lebanon, Saudi Arabia and the UAE." />
+<meta property="og:title" content="Middle East Engagement Calendar — UN Global Compact" />
+<meta property="og:description" content="Global, regional and local UN Global Compact programmes, events and engagement opportunities across the Middle East." />
+<meta property="og:image" content="assets/ungc-emblem.png" />
+<meta name="theme-color" content="#1E3250" />
+<link rel="icon" type="image/png" href="assets/favicon.png" />
+
+<script>
+  // Runs before first paint so there is no flash of the wrong theme,
+  // language direction or layout.
+  // - Light is the default; only an explicit stored choice switches to dark.
+  // - Language: ?lang=ar|en wins, then the visitor's last choice.
+  // - ?embed=1 strips the page down to the calendar for use in an iframe;
+  //   an embed follows its own embed code only, never stored choices.
+  (function () {
+    var root = document.documentElement, params = new URLSearchParams(location.search);
+    var embed = params.get("embed") === "1";
+    var theme = "light", lang = params.get("lang");
+    if (embed) {
+      root.classList.add("is-embed");
+      if (params.get("mode") === "dark") theme = "dark";
+    } else {
+      try {
+        if (localStorage.getItem("ungc-me-color-mode") === "dark") theme = "dark";
+        if (lang !== "ar" && lang !== "en") lang = localStorage.getItem("ungc-me-lang");
+        else localStorage.setItem("ungc-me-lang", lang);
+      } catch (e) {}
+    }
+    root.setAttribute("data-theme", theme);
+    root.lang = lang === "ar" ? "ar" : "en";
+    root.dir = lang === "ar" ? "rtl" : "ltr";
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Roboto:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<a class="skip-link" href="#calendar" data-i18n="skip">Skip to the calendar</a>
+
+<header class="site-header" id="siteHeader">
+  <div class="container">
+    <a class="brand" href="#top">
+      <img class="brand-emblem" src="assets/ungc-emblem.png" alt="" />
+      <span class="brand-name"><span class="brand-title" data-i18n="brand.name">UN Global Compact</span><span class="brand-sub" data-i18n="brand.sub">Middle East</span></span>
+    </a>
+    <div class="header-actions">
+      <a class="lang-toggle" id="langToggle" href="?lang=ar" lang="ar" hreflang="ar">العربية</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Dark mode" data-i18n-attr="aria-label:nav.darkMode" aria-pressed="false">
+        <span class="icon-sun" data-icon="sun"></span>
+        <span class="icon-moon" data-icon="moon"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top">
+    <div class="container">
+      <div class="hero-top">
+        <div class="hero-intro">
+          <h1 data-i18n="hero.title">Middle East Engagement Calendar</h1>
+          <p class="hero-lede" data-i18n="hero.lede">Global, regional and local programmes, events and engagement opportunities for UN Global Compact participants across Jordan, Lebanon, Saudi Arabia and the UAE.</p>
+          <div class="hero-actions">
+            <a class="btn btn--primary" href="#calendar" data-i18n="hero.browse">Browse the calendar</a>
+            <p class="hero-updated" data-last-updated hidden></p>
+          </div>
+        </div>
+        <aside class="open-now" id="openNow" aria-labelledby="openNowTitle" hidden>
+          <h2 class="open-now-title" id="openNowTitle"></h2>
+          <ul class="open-now-list" id="openNowList"></ul>
+        </aside>
+      </div>
+
+      <figure class="ribbon" id="ribbon" hidden>
+        <figcaption class="ribbon-caption">
+          <span id="ribbonTitle"></span>
+          <span class="ribbon-legend" id="ribbonLegend"></span>
+        </figcaption>
+        <div class="ribbon-scroll">
+          <div class="ribbon-inner" id="ribbonInner"></div>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="network-band" aria-labelledby="networkBandTitle">
+    <div class="container network-band-inner">
+      <p class="network-band-title" id="networkBandTitle" data-i18n="band.title">Brought to you by the UN Global Compact Local Networks in</p>
+      <div class="network-band-logos" id="networkLogos"></div>
+    </div>
+  </section>
+
+  <section class="pillars" aria-labelledby="pillarsTitle">
+    <div class="container">
+      <div class="pillars-head visually-hidden">
+        <h2 id="pillarsTitle" data-i18n="pillars.title">The Ten Principles' four pillars</h2>
+      </div>
+      <div class="pillar-grid">
+        <button class="pillar pillar--human-rights" type="button" data-theme-filter="Human Rights">
+          <span class="pillar-icon" data-icon="humanRights"></span>
+          <h3 data-i18n="tile.hr">Human Rights</h3>
+          <p data-i18n="tile.hr.text">Business respect for human rights, including due diligence and impact assessment.</p>
+          <span class="pillar-count"></span>
+        </button>
+        <button class="pillar pillar--labour" type="button" data-theme-filter="Labour">
+          <span class="pillar-icon" data-icon="labour"></span>
+          <h3 data-i18n="tile.labour">Labour</h3>
+          <p data-i18n="tile.labour.text">Labour standards, decent work and living wages across operations and supply chains.</p>
+          <span class="pillar-count"></span>
+        </button>
+        <button class="pillar pillar--environment" type="button" data-theme-filter="Environment">
+          <span class="pillar-icon" data-icon="environment"></span>
+          <h3 data-i18n="tile.env">Environment</h3>
+          <p data-i18n="tile.env.text">Climate ambition, water resilience and nature-positive business practice.</p>
+          <span class="pillar-count"></span>
+        </button>
+        <button class="pillar pillar--anti-corruption" type="button" data-theme-filter="Anti-Corruption">
+          <span class="pillar-icon" data-icon="anticorruption"></span>
+          <h3 data-i18n="tile.ac">Anti-Corruption</h3>
+          <p data-i18n="tile.ac.text">Business integrity, good governance and working against corruption in all its forms.</p>
+          <span class="pillar-count"></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="calendar-section" id="calendar" tabindex="-1">
+    <div class="container">
+      <div class="calendar-head">
+        <h2 data-i18n="cal.title">Calendar</h2>
+        <p class="last-updated" data-last-updated hidden></p>
+      </div>
+
+      <div class="controls">
+        <div class="search-bar">
+          <span class="search-icon" data-icon="search"></span>
+          <input type="search" id="eventSearch" placeholder="Search by name, country, topic or keyword…" aria-label="Search engagements" data-i18n-attr="placeholder:search.placeholder;aria-label:search.label" autocomplete="off" />
+        </div>
+
+        <div class="theme-chips" id="themeChips" role="group" aria-label="Theme" data-i18n-attr="aria-label:filter.theme"></div>
+
+        <div class="filters">
+          <div class="filter-field">
+            <label for="filterScope" data-i18n="filter.scope">Location</label>
+            <select id="filterScope"></select>
+          </div>
+          <div class="filter-field">
+            <label for="filterFormat" data-i18n="filter.format">Format</label>
+            <select id="filterFormat"></select>
+          </div>
+          <div class="filter-field">
+            <label for="filterType" data-i18n="filter.type">Event type</label>
+            <select id="filterType"></select>
+          </div>
+          <div class="filter-field">
+            <label for="filterParticipation" data-i18n="filter.participation">Who can take part</label>
+            <select id="filterParticipation"></select>
+          </div>
+          <button type="button" id="resetFilters" class="btn btn--ghost btn--sm reset-btn"><span data-icon="reset"></span> <span data-i18n="reset">Reset</span></button>
+        </div>
+      </div>
+
+      <div class="calendar-toolbar">
+        <div class="toolbar-group">
+          <div class="view-toggle" role="group" aria-label="Calendar view" data-i18n-attr="aria-label:view.label">
+            <button type="button" id="viewTimelineBtn" aria-pressed="true" data-i18n="view.timeline">Timeline</button>
+            <button type="button" id="viewListBtn" aria-pressed="false" data-i18n="view.list">List</button>
+          </div>
+          <div class="view-toggle period-toggle" id="periodToggle" role="group" aria-label="Time period" data-i18n-attr="aria-label:period.label"></div>
+        </div>
+        <div class="toolbar-actions">
+          <p class="result-count" id="resultCount" role="status" aria-live="polite"></p>
+          <div class="toolbar-buttons">
+            <button type="button" class="icon-btn" id="shareViewBtn"><span data-icon="link"></span><span class="icon-btn-label"></span></button>
+            <button type="button" class="icon-btn" id="addAllBtn"><span data-icon="calendarPlus"></span><span class="icon-btn-label"></span></button>
+            <button type="button" class="icon-btn" id="printBtn"><span data-icon="printer"></span><span class="icon-btn-label"></span></button>
+          </div>
+        </div>
+      </div>
+
+      <div id="calendarBody" aria-busy="true">
+        <div id="timelineView" class="timeline">
+          <p class="loading-note" data-i18n="loading">Loading engagements…</p>
+        </div>
+        <div id="listCards" class="list-view" hidden></div>
+      </div>
+
+      <p class="embed-credit" id="embedCredit"><a id="embedFullLink" href="./" target="_blank" rel="noopener"></a></p>
+    </div>
+  </section>
+</main>
+
+<div id="overlay" class="overlay" hidden></div>
+<div id="detailPanel" class="detail-panel" role="dialog" aria-modal="true" aria-labelledby="detailTitle" hidden>
+  <div class="detail-panel-header">
+    <div class="detail-panel-tools">
+      <button class="detail-panel-icon" id="detailCopyLink" type="button"><span data-icon="link"></span></button>
+      <button class="detail-panel-icon" id="detailPanelClose" type="button" aria-label="Close details" data-i18n-attr="aria-label:closeDetails"><span data-icon="close"></span></button>
+    </div>
+    <span class="detail-theme-tag" id="detailThemeTag"></span>
+    <h2 id="detailTitle" dir="auto"></h2>
+    <p class="detail-date" id="detailDate"></p>
+  </div>
+  <div class="detail-panel-body">
+    <ul class="detail-meta" id="detailMeta"></ul>
+    <div class="detail-tags" id="detailTags"></div>
+    <div id="detailStatus"></div>
+    <div class="detail-description" id="detailDescription" dir="auto"></div>
+    <div id="detailContact"></div>
+    <div class="detail-actions" id="detailActions"></div>
+    <div class="detail-calendar" id="detailCalendar"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<section class="contact-section" id="contact">
+  <div class="container contact-inner">
+    <div class="contact-intro">
+      <h2 data-i18n="contact.title">Questions about an engagement?</h2>
+      <p class="contact-fallback" id="contactFallback" data-i18n="contact.fallback">Contact the UN Global Compact Local Network in your country.</p>
+    </div>
+    <ul class="contact-list" id="contactList"></ul>
+  </div>
+</section>
+
+<footer class="site-footer" id="siteFooter">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="#top">
+          <img class="brand-emblem" src="assets/ungc-emblem.png" alt="" />
+          <span class="brand-name"><span class="brand-title" data-i18n="brand.name">UN Global Compact</span><span class="brand-sub" data-i18n="brand.sub">Middle East</span></span>
+        </a>
+        <p data-i18n="footer.text">Local Networks of the UN Global Compact help businesses across the Middle East advance the Ten Principles of the UN Global Compact and the Sustainable Development Goals.</p>
+      </div>
+      <div class="footer-links">
+        <div>
+          <h3 data-i18n="footer.calendar">Calendar</h3>
+          <a href="#calendar" data-i18n="footer.browse">Browse engagements</a>
+          <a href="#contact" data-i18n="footer.contact">Contact us</a>
+        </div>
+        <div>
+          <h3 data-i18n="footer.ungc">UN Global Compact</h3>
+          <a href="https://unglobalcompact.org/" target="_blank" rel="noopener">unglobalcompact.org</a>
+          <a href="https://unglobalcompact.org/what-is-gc/mission/principles" target="_blank" rel="noopener" data-i18n="footer.principles">The Ten Principles</a>
+          <a href="https://unglobalcompact.org/engage-locally" target="_blank" rel="noopener" data-i18n="footer.networks">Local Networks</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="copyrightYear"></span> <span data-i18n="footer.copyright">UN Global Compact Local Networks in the Middle East.</span></span>
+      <span data-last-updated hidden></span>
+    </div>
+  </div>
+</footer>
+
+<!-- Filled in just before printing (Print / PDF button or Ctrl+P). -->
+<div class="print-view" id="printView" aria-hidden="true"></div>
+
+<script src="js/config.js"></script>
+<script src="js/taxonomy.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/data.js"></script>
+<script src="js/loader.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

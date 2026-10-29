@@ -1,0 +1,11 @@
+# Kept on this computer only — never uploaded to GitHub.
+# Internal documents and raw logo files:
+*.docx
+Logos CNs/
+*.zip
+
+# Editor and system files:
+.claude/
+Thumbs.db
+.DS_Store
+desktop.ini
